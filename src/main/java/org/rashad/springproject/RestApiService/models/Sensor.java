@@ -3,6 +3,7 @@ package org.rashad.springproject.RestApiService.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="Sensor")
@@ -15,8 +16,10 @@ public class Sensor {
     @Column(name = "name")
     @NotEmpty
     @Size(min = 2,max = 100,message = "Size of name of sensor name has to be between 2 and 100")
-    @OneToMany(mappedBy = "owner")
     private String name;
+
+    @OneToMany(mappedBy = "sensor")
+    private List<Measurement> measurements;
 
     public Sensor() {
     }
@@ -40,5 +43,13 @@ public class Sensor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Measurement> getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(List<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }
