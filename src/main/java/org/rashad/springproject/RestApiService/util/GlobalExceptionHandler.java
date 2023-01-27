@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<SensorExceptionResponse> handleException(SensorException sensorException){
-        SensorExceptionResponse sensorExceptionResponse =
-                new SensorExceptionResponse(sensorException.getMessage());
-        return new ResponseEntity<>(sensorExceptionResponse, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ExceptionResponse> handleException(SensorException sensorException){
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(sensorException.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(MeasurementException measurementException){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(measurementException.getMessage());
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
 
 }

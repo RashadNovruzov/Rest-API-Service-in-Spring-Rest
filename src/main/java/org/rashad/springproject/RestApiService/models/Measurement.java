@@ -1,9 +1,7 @@
 package org.rashad.springproject.RestApiService.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,17 +15,17 @@ public class Measurement {
     @Column(name = "value")
     @Min(value = -100,message = "Value has to be greater than -100")
     @Max(value = 100,message = "Value has to be less than 100")
-    @NotEmpty
+    @NotNull(message = "value can not be empty")
     private double value;
 
     @Column(name = "raining")
-    @NotEmpty
+    @NotNull(message = "raining cant be null")
     private boolean raining;
 
-    @Column(name = "created_at")
+    @Column(name = "measured_at")
     private LocalDateTime createdAt;
 
-    @NotEmpty
+    @NotNull(message = "sensor can not be empty")
     @ManyToOne
     @JoinColumn(name = "sensor_id",referencedColumnName = "id")
     private Sensor sensor;

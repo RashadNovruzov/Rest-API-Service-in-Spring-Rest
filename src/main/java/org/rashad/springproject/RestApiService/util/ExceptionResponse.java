@@ -1,12 +1,12 @@
 package org.rashad.springproject.RestApiService.util;
 
-public class SensorExceptionResponse {
+public class ExceptionResponse {
     private String errorMessage;
 
-    public SensorExceptionResponse() {
+    public ExceptionResponse() {
     }
 
-    public SensorExceptionResponse(String errorMessage) {
+    public ExceptionResponse(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
