@@ -42,9 +42,6 @@ public class MeasurementValidator implements Validator {
 
         if(this.sensorService.findByName(sensor.getName()) == null){
             errors.rejectValue("sensor","","Sensor with this name doesn't exists.");
-        }else {
-            return;
         }
-
     }
 }

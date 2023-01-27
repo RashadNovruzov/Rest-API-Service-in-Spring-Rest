@@ -2,6 +2,7 @@ package org.rashad.springproject.RestApiService.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.rashad.springproject.RestApiService.dto.MeasurementDTO;
+import org.rashad.springproject.RestApiService.dto.RainyDaysCountDTO;
 import org.rashad.springproject.RestApiService.models.Measurement;
 import org.rashad.springproject.RestApiService.services.MeasurementService;
 import org.rashad.springproject.RestApiService.services.SensorService;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/measurements")
@@ -30,8 +33,6 @@ public class MeasurementController {
         this.measurementValidator = measurementValidator;
         this.sensorService = sensorService;
     }
-
-
 
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> add(@RequestBody @Valid MeasurementDTO measurementDTO, BindingResult bindingResult){
@@ -54,9 +55,21 @@ public class MeasurementController {
 
     }
 
+    @GetMapping
+    public List<MeasurementDTO> measurements(){
+        return measurementService.findAll().stream().map((measurement -> convertToMeasurementDTO(measurement))).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public RainyDaysCountDTO rainyDaysCount(){
+        return new RainyDaysCountDTO(measurementService.findByRainingTrue().size());
+    }
+
+    private MeasurementDTO convertToMeasurementDTO(Measurement measurement){
+       return modelMapper.map(measurement,MeasurementDTO.class);
+    }
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
         return modelMapper.map(measurementDTO,Measurement.class);
     }
-
 
 }
